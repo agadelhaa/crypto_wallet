@@ -5,8 +5,8 @@ namespace :dev do
       show_spinner("Apagando BD...") { %x(rails db:drop) }
       show_spinner("Criando BD...") { %x(rails db:create) }
       show_spinner("Migrando BD...") { %x(rails db:migrate) }
-      %x(rails dev:add_coins)
       %x(rails dev:add_mining_types)
+      %x(rails dev:add_coins)
     else
       puts "Você não está em ambiente de desenvolvimento!"
     end
@@ -18,18 +18,33 @@ namespace :dev do
       coins = [
         { description: "Bitcoin",
           acronym: "BTN",
-          url_image: "https://toppng.com/uploads/preview/bitcoin-png-bitcoin-logo-transparent-background-11562933997uxok6gcqjp.png"
+          url_image: "https://toppng.com/uploads/preview/bitcoin-png-bitcoin-logo-transparent-background-11562933997uxok6gcqjp.png",
+          mining_type: MiningType.find_by(acronym: 'PoW')
         },
 
         { description: "Ethereum",
           acronym: "ETH",
-          url_image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/628px-Ethereum_logo_2014.svg.png"
+          url_image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/628px-Ethereum_logo_2014.svg.png",
+          mining_type: MiningType.all.sample
         },
 
         { description: "Dash",
           acronym: "DASH",
-          url_image: "https://www.pngkit.com/png/detail/135-1353048_dash-icon-dash-coin-logo-png.png"
+          url_image: "https://www.pngkit.com/png/detail/135-1353048_dash-icon-dash-coin-logo-png.png",
+          mining_type: MiningType.all.sample
         },
+
+        { description: "Iota",
+          acronym: "IOT",
+          url_image: "https://cryptologos.cc/logos/iota-miota-logo.png",
+          mining_type: MiningType.all.sample
+        },
+
+        { description: "Zcash",
+          acronym: "ZEC",
+          url_image: "https://cryptologos.cc/logos/zcash-zec-logo.png",
+          mining_type: MiningType.all.sample
+        }
       ]
 
       coins.each do |coin|
